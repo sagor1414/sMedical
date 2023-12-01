@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "695003663399",
+    "project_id": "smedical-e2870",
+    "storage_bucket": "smedical-e2870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695003663399:android:0a664503ef86f94062d202",
+        "android_client_info": {
+          "package_name": "com.example.s_medi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2li5dgb3WSckpqMajGgCshAnZ8kvihb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
