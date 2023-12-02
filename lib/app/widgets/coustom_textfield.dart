@@ -21,6 +21,7 @@ class _CoustomTextFieldState extends State<CoustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.textcontroller,
       decoration: InputDecoration(
         prefixIcon: widget.icon,
         hintText: widget.hint,

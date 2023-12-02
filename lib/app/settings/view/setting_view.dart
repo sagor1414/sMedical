@@ -1,3 +1,5 @@
+import 'package:s_medi/app/auth/controller/signup_controller.dart';
+import 'package:s_medi/app/auth/view/login_page.dart';
 import 'package:s_medi/general/consts/consts.dart';
 
 import '../../widgets/coustom_iconbutton.dart';
@@ -61,7 +63,10 @@ class SettingsView extends StatelessWidget {
               10.heightBox,
               CoustomIconButton(
                 color: AppColors.redcolor,
-                onTap: () {},
+                onTap: () {
+                  SignupController().signout();
+                  Get.offAll(() => const LoginView());
+                },
                 title: "Logout",
                 icon: const Icon(
                   Icons.logout,

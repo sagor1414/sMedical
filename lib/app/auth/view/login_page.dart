@@ -1,7 +1,8 @@
+import 'package:s_medi/app/auth/controller/login_controller.dart';
 import 'package:s_medi/app/home/view/home.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 import 'package:s_medi/general/consts/consts.dart';
-import '../../widgets/coustom_button.dart';
+import '../../widgets/loading_indicator.dart';
 import 'signup_page.dart';
 
 class LoginView extends StatelessWidget {
@@ -9,6 +10,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(LoginController());
     return Scaffold(
       backgroundColor: const Color(0xfff8f8f6),
       body: Container(
@@ -39,11 +41,13 @@ class LoginView extends StatelessWidget {
                 child: Column(
                   children: [
                     CoustomTextField(
+                      textcontroller: controller.emailController,
                       icon: const Icon(Icons.email_outlined),
                       hint: AppString.emailHint,
                     ),
                     18.heightBox,
                     CoustomTextField(
+                      textcontroller: controller.passwordController,
                       icon: const Icon(Icons.key),
                       hint: AppString.passwordHint,
                     ),
@@ -56,11 +60,22 @@ class LoginView extends StatelessWidget {
                     SizedBox(
                       width: context.screenWidth * .7,
                       height: 44,
-                      child: CoustomButton(
-                        title: AppString.login,
-                        onTap: () {
-                          Get.to(() => const Home());
-                        },
+                      child: Obx(
+                        () => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primeryColor,
+                            shape: const StadiumBorder(),
+                          ),
+                          onPressed: () async {
+                            await controller.loginUser(context);
+                            if (controller.userCredential != null) {
+                              Get.offAll(() => const Home());
+                            }
+                          },
+                          child: controller.isLoading.value
+                              ? const LoadingIndicator()
+                              : AppString.login.text.white.make(),
+                        ),
                       ),
                     ),
                     20.heightBox,

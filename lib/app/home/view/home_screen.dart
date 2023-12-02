@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                   //some category
 
                   SizedBox(
-                    height: 100,
+                    height: 110,
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -168,7 +168,7 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.green.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        height: 104,
+                        height: 110,
                         child: Column(
                           children: [
                             Image.asset(
