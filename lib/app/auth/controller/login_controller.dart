@@ -40,8 +40,9 @@ class LoginController extends GetxController {
     if (value!.isEmpty) {
       return 'please enter a password';
     }
-    if (value.length != 8) {
-      return 'please enter at lust 8 charecter';
+    RegExp emailRefExp = RegExp(r'^.{8,}$');
+    if (!emailRefExp.hasMatch(value)) {
+      return 'please enter a valied email';
     }
     return null;
   }
