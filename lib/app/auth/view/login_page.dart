@@ -37,64 +37,67 @@ class LoginView extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Form(
+                  key: controller.formkey,
                   child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CoustomTextField(
-                      textcontroller: controller.emailController,
-                      icon: const Icon(Icons.email_outlined),
-                      hint: AppString.emailHint,
-                    ),
-                    18.heightBox,
-                    CoustomTextField(
-                      textcontroller: controller.passwordController,
-                      icon: const Icon(Icons.key),
-                      hint: AppString.passwordHint,
-                    ),
-                    20.heightBox,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: "Forget Password ?".text.make(),
-                    ),
-                    20.heightBox,
-                    SizedBox(
-                      width: context.screenWidth * .7,
-                      height: 44,
-                      child: Obx(
-                        () => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primeryColor,
-                            shape: const StadiumBorder(),
-                          ),
-                          onPressed: () async {
-                            await controller.loginUser(context);
-                            if (controller.userCredential != null) {
-                              Get.offAll(() => const Home());
-                            }
-                          },
-                          child: controller.isLoading.value
-                              ? const LoadingIndicator()
-                              : AppString.login.text.white.make(),
-                        ),
-                      ),
-                    ),
-                    20.heightBox,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
                       children: [
-                        AppString.dontHaveAccount.text.make(),
-                        8.widthBox,
-                        AppString.signup.text
-                            .color(AppColors.primeryColor)
-                            .make()
-                            .onTap(() {
-                          Get.to(() => const SignupView());
-                        }),
+                        CoustomTextField(
+                          validator: controller.validateemail,
+                          textcontroller: controller.emailController,
+                          icon: const Icon(Icons.email_outlined),
+                          hint: AppString.emailHint,
+                        ),
+                        18.heightBox,
+                        CoustomTextField(
+                          validator: controller.validpass,
+                          textcontroller: controller.passwordController,
+                          icon: const Icon(Icons.key),
+                          hint: AppString.passwordHint,
+                        ),
+                        20.heightBox,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: "Forget Password ?".text.make(),
+                        ),
+                        20.heightBox,
+                        SizedBox(
+                          width: context.screenWidth * .7,
+                          height: 44,
+                          child: Obx(
+                            () => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primeryColor,
+                                shape: const StadiumBorder(),
+                              ),
+                              onPressed: () async {
+                                await controller.loginUser(context);
+                                if (controller.userCredential != null) {
+                                  Get.offAll(() => const Home());
+                                }
+                              },
+                              child: controller.isLoading.value
+                                  ? const LoadingIndicator()
+                                  : AppString.login.text.white.make(),
+                            ),
+                          ),
+                        ),
+                        20.heightBox,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppString.dontHaveAccount.text.make(),
+                            8.widthBox,
+                            AppString.signup.text
+                                .color(AppColors.primeryColor)
+                                .make()
+                                .onTap(() {
+                              Get.to(() => const SignupView());
+                            }),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              )),
+                    ),
+                  )),
             ),
           ],
         ),

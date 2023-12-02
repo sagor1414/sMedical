@@ -6,16 +6,43 @@ class LoginController extends GetxController {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  //login if user enter validate email and password
   loginUser(context) async {
-    try {
-      isLoading(true);
-      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-      isLoading(false);
-      VxToast.show(context, msg: "Login Sucessfull");
-    } catch (e) {
-      isLoading(false);
-      VxToast.show(context, msg: "wrong email or password");
+    if (formkey.currentState!.validate()) {
+      try {
+        isLoading(true);
+        userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+        isLoading(false);
+        VxToast.show(context, msg: "Login Sucessfull");
+      } catch (e) {
+        isLoading(false);
+        VxToast.show(context, msg: "wrong email or password");
+      }
     }
+  }
+
+  //validate email and password
+  String? validateemail(value) {
+    if (value!.isEmpty) {
+      return 'please enter an email';
+    }
+    RegExp emailRefExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRefExp.hasMatch(value)) {
+      return 'please enter a valied email';
+    }
+    return null;
+  }
+
+  String? validpass(value) {
+    if (value!.isEmpty) {
+      return 'please enter a password';
+    }
+    if (value.length != 6) {
+      return 'please enter at lust 6 charecter';
+    }
+    return null;
   }
 }
