@@ -40,8 +40,8 @@ class LoginController extends GetxController {
     if (value!.isEmpty) {
       return 'please enter a password';
     }
-    if (value.length != 6) {
-      return 'please enter at lust 6 charecter';
+    if (value.length != 8) {
+      return 'please enter at lust 8 charecter';
     }
     return null;
   }
