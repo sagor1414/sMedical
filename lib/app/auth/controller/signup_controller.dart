@@ -19,12 +19,16 @@ class SignupController extends GetxController {
           password: passwordController.text,
         );
         if (userCredential != null) {
-          await storeUserData(
-            userCredential!.user!.uid,
-            nameController.text,
-            passwordController.text,
-            emailController.text,
-          );
+          var store = FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential!.user!.uid);
+          await store.set({
+            'uid': userCredential!.user!.uid,
+            'fullname': nameController.text,
+            'password': passwordController.text,
+            'email': emailController.text,
+          });
+          VxToast.show(context, msg: "Signup Sucessfull");
         }
         isLoading(false);
       } catch (e) {
@@ -50,8 +54,12 @@ class SignupController extends GetxController {
   storeUserData(
       String uid, String fullname, String email, String password) async {
     var store = FirebaseFirestore.instance.collection('users').doc(uid);
-    await store
-        .set({'fullname': fullname, 'email': email, 'password': password});
+    await store.set({
+      'uid': uid,
+      'fullname': fullname,
+      'password': email,
+      'email': password,
+    });
   }
 
   signout() async {
@@ -102,8 +110,9 @@ class SignupController extends GetxController {
     if (value!.isEmpty) {
       return 'please enter a password';
     }
-    if (value.length != 6) {
-      return 'please enter a valid name';
+    RegExp emailRefExp = RegExp(r'^.{5,}$');
+    if (!emailRefExp.hasMatch(value)) {
+      return 'Password enter a valid name';
     }
     return null;
   }
