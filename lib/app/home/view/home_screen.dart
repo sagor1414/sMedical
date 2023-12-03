@@ -79,7 +79,9 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    Get.to(() => const DoctorProfile());
+                                    Get.to(() => DoctorProfile(
+                                          doc: data[index],
+                                        ));
                                   },
                                   child: Container(
                                     clipBehavior: Clip.hardEdge,
@@ -112,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                                             .text
                                             .size(AppFontSize.size16)
                                             .make(),
-                                        data[index]['docCategoty']
+                                        data[index]['docCategory']
                                             .toString()
                                             .text
                                             .size(AppFontSize.size12)

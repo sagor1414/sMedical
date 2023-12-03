@@ -4,14 +4,15 @@ import 'package:s_medi/general/consts/consts.dart';
 import '../../book_appointment/view/appointment_view.dart';
 
 class DoctorProfile extends StatelessWidget {
-  const DoctorProfile({super.key});
+  final DocumentSnapshot doc;
+  const DoctorProfile({super.key, required this.doc});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
-        title: "Doctor name".text.make(),
+        title: "Doctor details".text.make(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -43,14 +44,18 @@ class DoctorProfile extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        "Doctor name".text.size(AppFontSize.size18).make(),
-                        "Category".text.make(),
+                        doc['docName']
+                            .toString()
+                            .text
+                            .size(AppFontSize.size18)
+                            .make(),
+                        doc['docCategory'].toString().text.make(),
                         8.heightBox,
                         VxRating(
                           onRatingUpdate: (value) {},
                           maxRating: 5,
                           count: 5,
-                          value: 4,
+                          value: double.parse(doc['docRating'].toString()),
                           stepInt: true,
                         ),
                       ],
@@ -76,7 +81,7 @@ class DoctorProfile extends StatelessWidget {
                           .semiBold
                           .size(AppFontSize.size16)
                           .make(),
-                      subtitle: "+88017....".text.make(),
+                      subtitle: doc['docPhone'].toString().text.make(),
                       trailing: Container(
                         width: 50,
                         padding: const EdgeInsets.all(10),
@@ -92,14 +97,16 @@ class DoctorProfile extends StatelessWidget {
                     ),
                     "About".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
-                    "This is the about of the doctor"
+                    doc['docAbout']
+                        .toString()
                         .text
                         .size(AppFontSize.size14)
                         .make(),
                     10.heightBox,
                     "Address".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
-                    "This is the address of the doctor"
+                    doc['docAddress']
+                        .toString()
                         .text
                         .size(AppFontSize.size14)
                         .make(),
@@ -110,11 +117,16 @@ class DoctorProfile extends StatelessWidget {
                         .size(AppFontSize.size18)
                         .make(),
                     5.heightBox,
-                    "9:00 AM to 6:00 PM".text.size(AppFontSize.size14).make(),
+                    doc['docTimeing']
+                        .toString()
+                        .text
+                        .size(AppFontSize.size14)
+                        .make(),
                     10.heightBox,
                     "Searvices".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
-                    "This is the searvices of the doctor"
+                    doc['docService']
+                        .toString()
                         .text
                         .size(AppFontSize.size14)
                         .make(),
