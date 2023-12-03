@@ -42,7 +42,7 @@ class LoginController extends GetxController {
     }
     RegExp emailRefExp = RegExp(r'^.{8,}$');
     if (!emailRefExp.hasMatch(value)) {
-      return 'please enter a valied email';
+      return 'Password Must Contain At Least 8 Characters';
     }
     return null;
   }
