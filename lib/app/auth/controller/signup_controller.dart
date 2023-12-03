@@ -33,21 +33,14 @@ class SignupController extends GetxController {
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
             // The email address is already in use by another account
-            Get.snackbar(
-              "Allready have an account",
-              "If you don't remember your password you can try forget password",
-              snackPosition: SnackPosition.TOP,
-            );
+            VxToast.show(context, msg: "Allready have an account");
           } else {
             // Handle other FirebaseAuth exceptions
-            Get.snackbar(
-              "No internet connection",
-              "Please check your internet",
-            );
+            VxToast.show(context, msg: "No internet connection");
           }
         } else {
           // Handle other exceptions (not related to FirebaseAuth)
-          Get.snackbar("Try after sometime", "$e");
+          VxToast.show(context, msg: "Try after some time ");
         }
         log("$e");
       }
