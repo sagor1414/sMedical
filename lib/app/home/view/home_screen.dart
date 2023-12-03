@@ -1,4 +1,5 @@
 import 'package:s_medi/app/doctor_profile/view/doctor_view.dart';
+import 'package:s_medi/app/home/controller/home_controller.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 import 'package:s_medi/general/consts/consts.dart';
 
@@ -9,6 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
@@ -48,8 +50,84 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
+                  //populer doctors
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: "Populer Doctors"
+                        .text
+                        .color(AppColors.greenColor)
+                        .size(AppFontSize.size16)
+                        .make(),
+                  ),
+                  10.heightBox,
+                  FutureBuilder<QuerySnapshot>(
+                      future: controller.getDoctorList(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          var data = snapshot.data?.docs;
+                          return SizedBox(
+                            height: 195,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: data?.length ?? 0,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => const DoctorProfile());
+                                  },
+                                  child: Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bgDarkColor,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    height: 120,
+                                    width: 130,
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Container(
+                                            color: AppColors.greenColor,
+                                            child: Image.asset(
+                                              AppAssets.imgDoctor,
+                                              height: 130,
+                                              width: double.infinity,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        const Divider(),
+                                        data![index]['docName']
+                                            .toString()
+                                            .text
+                                            .size(AppFontSize.size16)
+                                            .make(),
+                                        data[index]['docCategoty']
+                                            .toString()
+                                            .text
+                                            .size(AppFontSize.size12)
+                                            .make(),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      }),
+                  20.heightBox,
                   //some category
-
                   SizedBox(
                     height: 110,
                     child: ListView.builder(
@@ -83,68 +161,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   15.heightBox,
-                  //populer doctors
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: "Populer Doctors"
-                        .text
-                        .color(AppColors.greenColor)
-                        .size(AppFontSize.size16)
-                        .make(),
-                  ),
-                  10.heightBox,
-                  SizedBox(
-                    height: 195,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => const DoctorProfile());
-                          },
-                          child: Container(
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              color: AppColors.bgDarkColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: const EdgeInsets.only(bottom: 5),
-                            margin: const EdgeInsets.only(right: 8),
-                            height: 120,
-                            width: 130,
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                    color: AppColors.greenColor,
-                                    child: Image.asset(
-                                      AppAssets.imgDoctor,
-                                      height: 130,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const Divider(),
-                                "Doctor name"
-                                    .text
-                                    .size(AppFontSize.size16)
-                                    .make(),
-                                "Doctor Category"
-                                    .text
-                                    .size(AppFontSize.size12)
-                                    .make(),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  6.heightBox,
                   GestureDetector(
                     onTap: () {},
                     child: Align(
