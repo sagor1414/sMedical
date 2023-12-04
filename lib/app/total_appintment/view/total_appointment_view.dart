@@ -31,7 +31,9 @@ class TotalAppointment extends StatelessWidget {
                 itemBuilder: (BuildContext context, index) {
                   return ListTile(
                     onTap: () {
-                      Get.to(() => const Appointmentdetails());
+                      Get.to(() => Appointmentdetails(
+                            doc: data[index],
+                          ));
                     },
                     leading: CircleAvatar(
                       child: ClipOval(
