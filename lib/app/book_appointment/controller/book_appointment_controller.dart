@@ -9,7 +9,7 @@ class AppointmentController extends GetxController {
   var appMessageController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  bookAppointment(String docId, context) async {
+  bookAppointment(String docId, String docName, context) async {
     if (formkey.currentState!.validate()) {
       try {
         isLoading(true);
@@ -22,6 +22,7 @@ class AppointmentController extends GetxController {
           'appMobile': appMobileController.text,
           'appMsg': appMessageController.text,
           'appWith': docId,
+          'appDocName': docName,
         });
         isLoading(false);
         VxToast.show(context, msg: "Appointment is booked sucessfully");

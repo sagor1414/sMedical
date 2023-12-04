@@ -92,7 +92,7 @@ class BookAppointmentView extends StatelessWidget {
                 )
               : CoustomButton(
                   onTap: () async {
-                    await controller.bookAppointment(docId, context);
+                    await controller.bookAppointment(docId, docName, context);
                   },
                   title: "Confirm Appointment",
                 ),
