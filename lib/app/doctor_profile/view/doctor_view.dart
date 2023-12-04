@@ -141,7 +141,10 @@ class DoctorProfile extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: CoustomButton(
             onTap: () {
-              Get.to(() => const BookAppointmentView());
+              Get.to(() => BookAppointmentView(
+                    docId: doc['docId'],
+                    docName: doc['docName'],
+                  ));
             },
             title: "Book an Appointment"),
       ),

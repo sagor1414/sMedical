@@ -1,17 +1,22 @@
+import 'package:s_medi/app/book_appointment/controller/book_appointment_controller.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 
 import '../../../general/consts/consts.dart';
 import '../../widgets/coustom_button.dart';
 
 class BookAppointmentView extends StatelessWidget {
-  const BookAppointmentView({super.key});
+  final String docId;
+  final String docName;
+  const BookAppointmentView(
+      {super.key, required this.docId, required this.docName});
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AppointmentController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
-        title: "Doctor name".text.make(),
+        title: docName.text.make(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -25,9 +30,10 @@ class BookAppointmentView extends StatelessWidget {
                   .size(AppFontSize.size16)
                   .semiBold
                   .make(),
-              const CoustomTextField(
+              CoustomTextField(
+                textcontroller: controller.appDayController,
                 hint: "Select date",
-                icon: Icon(Icons.calendar_month_outlined),
+                icon: const Icon(Icons.calendar_month_outlined),
               ),
               10.heightBox,
               "Select Appointment Time"
@@ -35,25 +41,29 @@ class BookAppointmentView extends StatelessWidget {
                   .size(AppFontSize.size16)
                   .semiBold
                   .make(),
-              const CoustomTextField(
+              CoustomTextField(
+                textcontroller: controller.appTimeController,
                 hint: "Select time",
-                icon: Icon(Icons.watch_later),
+                icon: const Icon(Icons.watch_later),
               ),
               10.heightBox,
               "patient's name".text.size(AppFontSize.size16).semiBold.make(),
-              const CoustomTextField(
+              CoustomTextField(
+                textcontroller: controller.appNameController,
                 hint: "patient's full name",
-                icon: Icon(Icons.person),
+                icon: const Icon(Icons.person),
               ),
               10.heightBox,
               "Mobile Number".text.size(AppFontSize.size16).semiBold.make(),
-              const CoustomTextField(
-                hint: "Enter patent number",
-                icon: Icon(Icons.call),
+              CoustomTextField(
+                textcontroller: controller.appMobileController,
+                hint: "Enter patent mobile number",
+                icon: const Icon(Icons.call),
               ),
               10.heightBox,
               "Your problem".text.size(AppFontSize.size16).semiBold.make(),
               TextFormField(
+                controller: controller.appMessageController,
                 maxLines: 3,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.note_add),
@@ -66,9 +76,20 @@ class BookAppointmentView extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10),
-        child: CoustomButton(onTap: () {}, title: "Confirm Appointment"),
+      bottomNavigationBar: Obx(
+        () => Padding(
+          padding: const EdgeInsets.all(10),
+          child: controller.isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : CoustomButton(
+                  onTap: () async {
+                    await controller.bookAppointment(docId, context);
+                  },
+                  title: "Confirm Appointment",
+                ),
+        ),
       ),
     );
   }
