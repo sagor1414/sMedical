@@ -75,26 +75,6 @@ class DoctorProfile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ListTile(
-                      title: "Phone number"
-                          .text
-                          .semiBold
-                          .size(AppFontSize.size16)
-                          .make(),
-                      subtitle: doc['docPhone'].toString().text.make(),
-                      trailing: Container(
-                        width: 50,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.primeryColor,
-                        ),
-                        child: const Icon(
-                          Icons.phone,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                     "About".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
                     doc['docAbout']
@@ -130,6 +110,18 @@ class DoctorProfile extends StatelessWidget {
                         .text
                         .size(AppFontSize.size14)
                         .make(),
+                    25.heightBox,
+                    ListTile(
+                      title: "Contact Details"
+                          .text
+                          .semiBold
+                          .size(AppFontSize.size16)
+                          .make(),
+                      subtitle: "First book an Appointment for contact details"
+                          .text
+                          .size(AppFontSize.size12)
+                          .make(),
+                    ),
                   ],
                 ),
               ),
@@ -141,10 +133,13 @@ class DoctorProfile extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: CoustomButton(
             onTap: () {
-              Get.to(() => BookAppointmentView(
-                    docId: doc['docId'],
-                    docName: doc['docName'],
-                  ));
+              Get.to(
+                () => BookAppointmentView(
+                  docId: doc['docId'],
+                  docName: doc['docName'],
+                  docNum: doc['docPhone'],
+                ),
+              );
             },
             title: "Book an Appointment"),
       ),

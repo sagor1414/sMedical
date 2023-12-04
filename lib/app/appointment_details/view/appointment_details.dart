@@ -48,9 +48,30 @@ class Appointmentdetails extends StatelessWidget {
                       doc['appDocName']
                           .toString()
                           .text
-                          .size(AppFontSize.size18)
+                          .size(AppFontSize.size16)
+                          .make(),
+                      doc['appDocNum']
+                          .toString()
+                          .text
+                          .size(AppFontSize.size12)
                           .make(),
                     ],
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: 60,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: AppColors.primeryColor,
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -6,9 +6,14 @@ import '../../widgets/coustom_button.dart';
 
 class BookAppointmentView extends StatelessWidget {
   final String docId;
+  final String docNum;
   final String docName;
-  const BookAppointmentView(
-      {super.key, required this.docId, required this.docName});
+  const BookAppointmentView({
+    super.key,
+    required this.docId,
+    required this.docName,
+    required this.docNum,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +97,8 @@ class BookAppointmentView extends StatelessWidget {
                 )
               : CoustomButton(
                   onTap: () async {
-                    await controller.bookAppointment(docId, docName, context);
+                    await controller.bookAppointment(
+                        docId, docName, docNum, context);
                   },
                   title: "Confirm Appointment",
                 ),
