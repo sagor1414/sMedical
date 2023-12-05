@@ -50,6 +50,39 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 110,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: iconList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          //ontap for list
+                          onTap: () {},
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.greenColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            padding: const EdgeInsets.all(12),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  iconList[index],
+                                  width: 50,
+                                ),
+                                5.heightBox,
+                                iconListTitle[index].text.make()
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  15.heightBox,
                   //populer doctors
                   Align(
                     alignment: Alignment.centerLeft,
@@ -128,41 +161,6 @@ class HomeScreen extends StatelessWidget {
                           );
                         }
                       }),
-                  20.heightBox,
-                  //some category
-                  SizedBox(
-                    height: 110,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: iconList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          //ontap for list
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.greenColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  iconList[index],
-                                  width: 50,
-                                ),
-                                5.heightBox,
-                                iconListTitle[index].text.make()
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  15.heightBox,
                   GestureDetector(
                     onTap: () {},
                     child: Align(
