@@ -1,3 +1,4 @@
+import 'package:s_medi/app/category_details/view/category_details.dart';
 import 'package:s_medi/app/doctor_profile/view/doctor_view.dart';
 import 'package:s_medi/app/home/controller/home_controller.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
@@ -59,7 +60,10 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           //ontap for list
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(() => CategoryDetailsView(
+                                catName: iconListTitle[index]));
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.greenColor,
@@ -94,73 +98,73 @@ class HomeScreen extends StatelessWidget {
                   ),
                   10.heightBox,
                   FutureBuilder<QuerySnapshot>(
-                      future: controller.getDoctorList(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          var data = snapshot.data?.docs;
-                          return SizedBox(
-                            height: 195,
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: data?.length ?? 0,
-                              itemBuilder: (BuildContext context, int index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.to(() => DoctorProfile(
-                                          doc: data[index],
-                                        ));
-                                  },
-                                  child: Container(
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.bgDarkColor,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    padding: const EdgeInsets.only(bottom: 5),
-                                    margin: const EdgeInsets.only(right: 8),
-                                    height: 120,
-                                    width: 130,
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          child: Container(
-                                            color: AppColors.greenColor,
-                                            child: Image.asset(
-                                              AppAssets.imgDoctor,
-                                              height: 130,
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                            ),
+                    future: controller.getDoctorList(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        var data = snapshot.data?.docs;
+                        return SizedBox(
+                          height: 195,
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data?.length ?? 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(() => DoctorProfile(
+                                        doc: data[index],
+                                      ));
+                                },
+                                child: Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.bgDarkColor,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  margin: const EdgeInsets.only(right: 8),
+                                  height: 120,
+                                  width: 130,
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Container(
+                                          color: AppColors.greenColor,
+                                          child: Image.asset(
+                                            AppAssets.imgDoctor,
+                                            height: 130,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                        const Divider(),
-                                        data![index]['docName']
-                                            .toString()
-                                            .text
-                                            .size(AppFontSize.size16)
-                                            .make(),
-                                        data[index]['docCategory']
-                                            .toString()
-                                            .text
-                                            .size(AppFontSize.size12)
-                                            .make(),
-                                      ],
-                                    ),
+                                      ),
+                                      const Divider(),
+                                      data![index]['docName']
+                                          .toString()
+                                          .text
+                                          .size(AppFontSize.size16)
+                                          .make(),
+                                      data[index]['docCategory']
+                                          .toString()
+                                          .text
+                                          .size(AppFontSize.size12)
+                                          .make(),
+                                    ],
                                   ),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      }),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
                   GestureDetector(
                     onTap: () {},
                     child: Align(

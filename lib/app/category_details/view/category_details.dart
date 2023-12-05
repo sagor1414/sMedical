@@ -11,7 +11,7 @@ class CategoryDetailsView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.greenColor,
-          title: "Total Doctors".text.make(),
+          title: "$catName doctors".text.make(),
         ),
         body: FutureBuilder<QuerySnapshot>(
             future: FirebaseFirestore.instance
