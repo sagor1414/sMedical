@@ -27,7 +27,9 @@ class CategoryScreenn extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                Get.to(() => const CategoryDetailsView());
+                Get.to(() => CategoryDetailsView(
+                      catName: categoryTitle[index],
+                    ));
               },
               child: Container(
                 decoration: BoxDecoration(
