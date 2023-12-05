@@ -1,10 +1,12 @@
 import 'package:s_medi/app/category_details/view/category_details.dart';
 import 'package:s_medi/app/doctor_profile/view/doctor_view.dart';
 import 'package:s_medi/app/home/controller/home_controller.dart';
+import 'package:s_medi/app/search/controller/search_controller.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 import 'package:s_medi/general/consts/consts.dart';
 
 import '../../../general/list/home_icon_list.dart';
+import '../../search/view/search_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(HomeController());
+    var searchcontroller = Get.put(DocSearchController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
@@ -37,12 +40,20 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CoustomTextField(
+                      textcontroller: searchcontroller.searchQueryController,
                       hint: AppString.search,
                       icon: const Icon(Icons.person_search_sharp),
                     ),
                   ),
                   10.widthBox,
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+                  IconButton(
+                      onPressed: () {
+                        Get.to(() => SearchView(
+                              searchQuery:
+                                  searchcontroller.searchQueryController.text,
+                            ));
+                      },
+                      icon: const Icon(Icons.search))
                 ],
               ),
             ),
