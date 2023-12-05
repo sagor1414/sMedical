@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:s_medi/app/auth/view/login_page.dart';
 import 'package:s_medi/app/category/view/category_view.dart';
 import 'package:s_medi/app/home/view/home_screen.dart';
 import 'package:s_medi/app/settings/view/setting_view.dart';
@@ -20,7 +19,6 @@ class _HomeState extends State<Home> {
     const HomeScreen(),
     const CategoryScreenn(),
     const TotalAppointment(),
-    const LoginView(),
     const SettingsView(),
   ];
   @override
@@ -46,7 +44,6 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.category_outlined), label: "Category"),
           BottomNavigationBarItem(
               icon: Icon(Icons.date_range), label: "Appointments"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Doctor"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
