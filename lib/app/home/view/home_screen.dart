@@ -190,9 +190,8 @@ class HomeScreen extends StatelessWidget {
                   20.heightBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(
-                      4,
-                      (index) => Container(
+                    children: [
+                      Container(
                         padding: const EdgeInsets.all(6),
                         clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
@@ -211,7 +210,64 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(.4),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 110,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.icBody,
+                              width: context.screenWidth * .16,
+                            ),
+                            5.heightBox,
+                            "Xry report".text.make()
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(.4),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 110,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.icBody,
+                              width: context.screenWidth * .16,
+                            ),
+                            5.heightBox,
+                            "Mri report".text.make()
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(.4),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 110,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.icBody,
+                              width: context.screenWidth * .16,
+                            ),
+                            5.heightBox,
+                            "Others".text.make()
+                          ],
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
