@@ -2,7 +2,7 @@
 # sMedical
 
 This is a complete doctor appointment app there user can appoint a doctor.
-please give a star for more projects.
+please give a star for more projects.If it work for you please give me a star.and you can follow me for more projects.
 
 
 ## Installation
