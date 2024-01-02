@@ -17,7 +17,9 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
   Future<void> resetPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      // Password reset email sent successfully
+      // ignore: use_build_context_synchronously
+      VxToast.show(context, msg: "Password reset email sent to your email");
+      Get.back();
       // Handle navigation or show a success message
     } catch (error) {
       // Handle password reset email sending error
