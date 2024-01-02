@@ -2,7 +2,7 @@ import 'package:s_medi/app/auth/controller/login_controller.dart';
 import 'package:s_medi/app/home/view/home.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 import 'package:s_medi/general/consts/consts.dart';
-import '../../reset_password/reset_password.dart';
+import '../reset_password/reset_password.dart';
 import '../../widgets/loading_indicator.dart';
 import 'signup_page.dart';
 
