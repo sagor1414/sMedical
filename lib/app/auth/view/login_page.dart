@@ -2,6 +2,7 @@ import 'package:s_medi/app/auth/controller/login_controller.dart';
 import 'package:s_medi/app/home/view/home.dart';
 import 'package:s_medi/app/widgets/coustom_textfield.dart';
 import 'package:s_medi/general/consts/consts.dart';
+import '../../reset_password/reset_password.dart';
 import '../../widgets/loading_indicator.dart';
 import 'signup_page.dart';
 
@@ -57,7 +58,11 @@ class LoginView extends StatelessWidget {
                         20.heightBox,
                         Align(
                           alignment: Alignment.centerRight,
-                          child: "Forget Password ?".text.make(),
+                          child: InkWell(
+                              onTap: () {
+                                Get.to(() => const PasswordResetPage());
+                              },
+                              child: "Forget Password ?".text.make()),
                         ),
                         20.heightBox,
                         SizedBox(
