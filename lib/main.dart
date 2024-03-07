@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:s_medi/firebase_options.dart';
 import 'package:s_medi/general/consts/consts.dart';
-import 'app/auth/view/login_page.dart';
-import 'app/home/view/home.dart';
+
+import 'users/auth/view/login_page.dart';
+import 'users/home/view/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
