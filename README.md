@@ -36,7 +36,7 @@ For support, email sagorsamadder.official@gmail.com
 
 
 ## State mannagement
-    for state mannagement you use GETX
+    for state mannagement wee use GETX
 ## Backend
     for auth and storeing data we use firebase as a backend service
 ## Screenshots
