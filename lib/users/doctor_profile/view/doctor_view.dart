@@ -32,7 +32,6 @@ class DoctorProfile extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      clipBehavior: Clip.hardEdge,
                       height: 75,
                       width: 75,
                       child: Image.asset(

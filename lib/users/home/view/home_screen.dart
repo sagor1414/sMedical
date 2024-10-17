@@ -132,7 +132,6 @@ class HomeScreen extends StatelessWidget {
                                       ));
                                 },
                                 child: Container(
-                                  clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
                                     color: AppColors.bgDarkColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -193,7 +192,6 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(6),
-                        clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),
@@ -212,7 +210,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.all(6),
-                        clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),
@@ -231,7 +228,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.all(6),
-                        clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),
@@ -250,7 +246,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.all(6),
-                        clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),

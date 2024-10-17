@@ -36,7 +36,6 @@ class CategoryDetailsView extends StatelessWidget {
                 itemCount: data?.length ?? 0,
                 itemBuilder: (BuildContext context, index) {
                   return Container(
-                    clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       color: AppColors.bgDarkColor,
                       borderRadius: BorderRadius.circular(15),

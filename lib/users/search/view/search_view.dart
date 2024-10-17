@@ -52,7 +52,6 @@ class SearchView extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            clipBehavior: Clip.hardEdge,
                             decoration: BoxDecoration(
                               color: AppColors.bgDarkColor,
                               borderRadius: BorderRadius.circular(15),

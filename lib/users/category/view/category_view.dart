@@ -1,17 +1,51 @@
-import 'package:s_medi/general/consts/consts.dart';
-import 'package:s_medi/general/list/home_icon_list.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:s_medi/doctor/general/list/home_icon_list.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../category_details/view/category_details.dart';
 
-class CategoryScreenn extends StatelessWidget {
+class CategoryScreenn extends StatefulWidget {
   const CategoryScreenn({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _CategoryScreennState createState() => _CategoryScreennState();
+}
+
+class _CategoryScreennState extends State<CategoryScreenn> {
+  // Create a map to hold doctor counts for each category
+  Map<String, int> categoryDoctorCount = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDoctorCounts();
+  }
+
+  // Function to fetch the number of doctors in each category from Firestore
+  Future<void> fetchDoctorCounts() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Loop through each category and fetch the count of doctors
+    for (String category in categoryTitle) {
+      QuerySnapshot querySnapshot = await firestore
+          .collection('doctors')
+          .where('docCategory', isEqualTo: category)
+          .get();
+
+      setState(() {
+        categoryDoctorCount[category] = querySnapshot.size;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.greenColor,
-        title: "Total Categoty".text.make(),
+        backgroundColor: Colors.green,
+        title: "Total Category".text.make(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -25,19 +59,19 @@ class CategoryScreenn extends StatelessWidget {
             mainAxisExtent: 200,
           ),
           itemBuilder: (BuildContext context, int index) {
+            String category = categoryTitle[index];
+
             return GestureDetector(
               onTap: () {
                 Get.to(() => CategoryDetailsView(
-                      catName: categoryTitle[index],
+                      catName: category,
                     ));
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.bgDarkColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding: const EdgeInsets.all(12),
-                // margin: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(
                   children: [
                     Image.asset(
@@ -45,8 +79,9 @@ class CategoryScreenn extends StatelessWidget {
                       width: 110,
                     ),
                     const Divider(),
-                    categoryTitle[index].text.size(AppFontSize.size18).make(),
-                    "13 Specialists".text.make()
+                    category.text.size(18).make(),
+                    Text(
+                        "${categoryDoctorCount[category]?.toString() ?? ""} Specialists")
                   ],
                 ),
               ),
