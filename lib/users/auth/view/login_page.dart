@@ -1,5 +1,4 @@
 import 'package:s_medi/general/consts/consts.dart';
-import '../../home/view/home.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../controller/login_controller.dart';
 import '../reset_password/reset_password.dart';
@@ -75,10 +74,7 @@ class LoginView extends StatelessWidget {
                                 shape: const StadiumBorder(),
                               ),
                               onPressed: () async {
-                                await controller.loginUser(context);
-                                if (controller.userCredential != null) {
-                                  Get.offAll(() => const Home());
-                                }
+                                controller.loginUser(context);
                               },
                               child: controller.isLoading.value
                                   ? const LoadingIndicator()

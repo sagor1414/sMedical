@@ -64,12 +64,12 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 flutter_native_splash:
-  color: "#88D008"
+  color: "#FFFFFF"
   image: assets/sicon.png
   android: true
   android_12:
     image: assets/sicon.png
-    icon_background_color: "#88D008"
+    icon_background_color: "#FFFFFF"
   ios: true
   web: false
 flutter_launcher_icons:

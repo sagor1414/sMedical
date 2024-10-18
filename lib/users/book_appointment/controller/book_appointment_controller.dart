@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:s_medi/general/consts/consts.dart';
 import 'package:intl/intl.dart';
 
@@ -70,7 +71,9 @@ class AppointmentController extends GetxController {
             filteredIntervals.add(interval);
           }
         } catch (e) {
-          print('Error parsing time interval: $interval - $e');
+          if (kDebugMode) {
+            print('Error parsing time interval: $interval - $e');
+          }
         }
       }
     } else {

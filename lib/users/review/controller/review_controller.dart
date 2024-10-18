@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:s_medi/users/home/view/home.dart';
@@ -90,7 +91,9 @@ class ReviewController extends GetxController {
           snackPosition: SnackPosition.TOP);
       Get.offAll(() => const Home());
     } catch (e) {
-      print('Error submitting review: $e');
+      if (kDebugMode) {
+        print('Error submitting review: $e');
+      }
       Get.snackbar('Error', 'Failed to submit review',
           snackPosition: SnackPosition.BOTTOM);
     }
