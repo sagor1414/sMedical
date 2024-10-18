@@ -5,8 +5,8 @@ import '../../category_details/view/category_details.dart';
 import '../../doctor_profile/view/doctor_view.dart';
 import '../../search/controller/search_controller.dart';
 import '../../search/view/search_view.dart';
-import '../../widgets/coustom_textfield.dart';
 import '../controller/home_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,12 +17,20 @@ class HomeScreen extends StatelessWidget {
     var searchcontroller = Get.put(DocSearchController());
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.greenColor,
+        backgroundColor: AppColors.whiteColor,
         title: Row(
           children: [
             AppString.welcome.text.make(),
             5.widthBox,
-            "User".text.make()
+            Expanded(
+              child: Obx(
+                () => Text(
+                  "${controller.userName}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            )
           ],
         ),
         elevation: 0,
@@ -35,45 +43,120 @@ class HomeScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               height: 70,
-              color: AppColors.greenColor,
+              color: AppColors.whiteColor,
               child: Row(
                 children: [
                   Expanded(
-                    child: CoustomTextField(
-                      textcontroller: searchcontroller.searchQueryController,
-                      hint: AppString.search,
-                      icon: const Icon(Icons.person_search_sharp),
+                    child: TextFormField(
+                      controller: searchcontroller.searchQueryController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 15.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: AppColors.primeryColor, width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: AppColors.primeryColor, width: 2.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                      ),
+                      style: TextStyle(color: AppColors.primeryColor),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'This field cannot be empty';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   10.widthBox,
-                  IconButton(
+                  Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                      color: AppColors.primeryColor,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: IconButton(
                       onPressed: () {
-                        Get.to(() => SearchView(
+                        if (searchcontroller
+                            .searchQueryController.text.isNotEmpty) {
+                          Get.to(
+                            () => SearchView(
                               searchQuery:
                                   searchcontroller.searchQueryController.text,
-                            ));
+                            ),
+                          );
+                        } else {
+                          Get.showSnackbar(
+                            const GetSnackBar(
+                              margin: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(10),
+                              title: "Empry input",
+                              message: "Please input someting first",
+                              animationDuration: Duration(seconds: 1),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.grey,
+                              dismissDirection: DismissDirection.horizontal,
+                              duration: Duration(seconds: 2),
+                              borderRadius: 10,
+                            ),
+                          );
+                        }
                       },
-                      icon: const Icon(Icons.search))
+                      icon: Icon(
+                        Icons.search,
+                        color: AppColors.whiteColor,
+                        size: 30,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
             4.heightBox,
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: "Populer Category"
+                        .text
+                        .color(AppColors.primeryColor)
+                        .size(AppFontSize.size16)
+                        .make(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                     height: 110,
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      itemCount: iconList.length,
+                      itemCount: 5,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          //ontap for list
                           onTap: () {
-                            Get.to(() => CategoryDetailsView(
-                                catName: iconListTitle[index]));
+                            Get.to(
+                              () => CategoryDetailsView(
+                                catName: iconListTitle[index],
+                              ),
+                            );
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -98,12 +181,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   15.heightBox,
-                  //populer doctors
                   Align(
                     alignment: Alignment.centerLeft,
                     child: "Populer Doctors"
                         .text
-                        .color(AppColors.greenColor)
+                        .color(AppColors.primeryColor)
                         .size(AppFontSize.size16)
                         .make(),
                   ),
@@ -113,8 +195,56 @@ class HomeScreen extends StatelessWidget {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        // Use a shimmer effect while loading
+                        return SizedBox(
+                          height: 195,
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5, // Number of shimmer items
+                            itemBuilder: (BuildContext context, int index) {
+                              return Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  margin: const EdgeInsets.only(right: 8),
+                                  height: 120,
+                                  width: 130,
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Container(
+                                          height: 130,
+                                          width: double.infinity,
+                                          color: Colors.grey[
+                                              300], // Shimmer effect for the image
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        height: 16,
+                                        width: 100,
+                                        color: Colors.grey[
+                                            300], // Shimmer effect for the text
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Container(
+                                        height: 12,
+                                        width: 60,
+                                        color: Colors.grey[
+                                            300], // Shimmer effect for category
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       } else {
                         var data = snapshot.data?.docs;
@@ -145,21 +275,31 @@ class HomeScreen extends StatelessWidget {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
                                         child: Container(
-                                          color: AppColors.greenColor,
-                                          child: Image.asset(
-                                            AppAssets.imgDoctor,
-                                            height: 130,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child: data![index]["image"] == ""
+                                              ? Image.asset(
+                                                  AppAssets.imgLogin,
+                                                  height: 130,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.network(
+                                                  data[index]["image"],
+                                                ),
                                         ),
                                       ),
                                       const Divider(),
-                                      data![index]['docName']
-                                          .toString()
-                                          .text
-                                          .size(AppFontSize.size16)
-                                          .make(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          data[index]['docName'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                       data[index]['docCategory']
                                           .toString()
                                           .text
@@ -175,18 +315,21 @@ class HomeScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  GestureDetector(
-                    onTap: () {},
+                  20.heightBox,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
                     child: Align(
-                      alignment: Alignment.centerRight,
-                      child: "View All"
-                          .text
-                          .color(AppColors.primeryColor)
-                          .size(AppFontSize.size16)
-                          .make(),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Make Reports",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primeryColor,
+                        ),
+                      ),
                     ),
                   ),
-                  20.heightBox,
+                  10.heightBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

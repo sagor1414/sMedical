@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:s_medi/doctor/general/list/home_icon_list.dart';
+import 'package:s_medi/general/consts/colors.dart';
+
+import 'package:s_medi/general/list/home_icon_list.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../category_details/view/category_details.dart';
 
@@ -44,7 +46,7 @@ class _CategoryScreennState extends State<CategoryScreenn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         title: "Total Category".text.make(),
       ),
       body: Padding(
@@ -70,6 +72,7 @@ class _CategoryScreennState extends State<CategoryScreenn> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
+                  color: AppColors.bgColor,
                 ),
                 padding: const EdgeInsets.all(12),
                 child: Column(

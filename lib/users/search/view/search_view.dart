@@ -1,5 +1,4 @@
 import 'package:s_medi/general/consts/consts.dart';
-
 import '../../doctor_profile/view/doctor_view.dart';
 
 class SearchView extends StatelessWidget {
@@ -10,8 +9,8 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.greenColor,
-        title: "Serch results".text.make(),
+        backgroundColor: AppColors.whiteColor,
+        title: "Search results".text.make(),
         elevation: 0,
       ),
       body: FutureBuilder<QuerySnapshot>(
@@ -22,6 +21,17 @@ class SearchView extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else {
+            var filteredDocs = snapshot.data!.docs.where((doc) {
+              String docName = doc['docName'].toString().toLowerCase();
+              return docName.contains(searchQuery.toLowerCase());
+            }).toList();
+
+            if (filteredDocs.isEmpty) {
+              return Center(
+                child: "No doctor found, try another name.".text.makeCentered(),
+              );
+            }
+
             return Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
@@ -31,67 +41,57 @@ class SearchView extends StatelessWidget {
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                 ),
-                itemCount: snapshot.data!.docs.length,
+                itemCount: filteredDocs.length,
                 itemBuilder: (BuildContext context, index) {
-                  var doc = snapshot.data!.docs[index];
-                  return !(doc['docName']
-                          .toString()
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase()))
-                      ? Center(
-                          child: "No doctor found try another name"
-                              .text
-                              .makeCentered(),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            Get.to(
-                              () => DoctorProfile(
-                                doc: doc,
+                  var doc = filteredDocs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => DoctorProfile(
+                          doc: doc,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.bgDarkColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(right: 8),
+                      height: 120,
+                      width: 130,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              width: 130,
+                              color: AppColors.greenColor,
+                              child: Image.asset(
+                                AppAssets.imgLogin,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
                               ),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.bgDarkColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: const EdgeInsets.only(bottom: 5),
-                            margin: const EdgeInsets.only(right: 8),
-                            height: 120,
-                            width: 130,
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                    width: 130,
-                                    color: AppColors.greenColor,
-                                    child: Image.asset(
-                                      AppAssets.imgLogin,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const Divider(),
-                                doc['docName']
-                                    .toString()
-                                    .text
-                                    .size(AppFontSize.size16)
-                                    .make(),
-                                VxRating(
-                                  onRatingUpdate: (value) {},
-                                  maxRating: 5,
-                                  count: 5,
-                                  value:
-                                      double.parse(doc['docRating'].toString()),
-                                  stepInt: true,
-                                ),
-                              ],
                             ),
                           ),
-                        );
+                          const Divider(),
+                          doc['docName']
+                              .toString()
+                              .text
+                              .size(AppFontSize.size16)
+                              .make(),
+                          VxRating(
+                            onRatingUpdate: (value) {},
+                            maxRating: 5,
+                            count: 5,
+                            value: double.parse(doc['docRating'].toString()),
+                            stepInt: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
               ),
             );

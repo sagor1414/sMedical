@@ -27,39 +27,26 @@ class SignupController extends GetxController {
             'fullname': nameController.text,
             'password': passwordController.text,
             'email': emailController.text,
+            'deviceToken': '',
+            'role': 'user',
           });
           VxToast.show(context, msg: "Signup Sucessfull");
         }
         isLoading(false);
       } catch (e) {
         isLoading(false);
-        // Check the type of exception and show a toast accordingly
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
-            // The email address is already in use by another account
             VxToast.show(context, msg: "Allready have an account");
           } else {
-            // Handle other FirebaseAuth exceptions
             VxToast.show(context, msg: "No internet connection");
           }
         } else {
-          // Handle other exceptions (not related to FirebaseAuth)
           VxToast.show(context, msg: "Try after some time ");
         }
         log("$e");
       }
     }
-  }
-
-  storeUserData(
-      String uid, String fullname, String email, String password) async {
-    var store = FirebaseFirestore.instance.collection('users').doc(uid);
-    await store.set({
-      'uid': uid,
-      'fullname': fullname,
-      'password': email,
-      'email': password,
-    });
   }
 
   signout() async {

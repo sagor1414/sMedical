@@ -1,5 +1,6 @@
 import '../../../general/consts/consts.dart';
 import '../../doctor_profile/view/doctor_view.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class CategoryDetailsView extends StatelessWidget {
   final String catName;
@@ -9,7 +10,7 @@ class CategoryDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.greenColor,
+        backgroundColor: AppColors.whiteColor,
         title: "$catName doctors".text.make(),
       ),
       body: FutureBuilder<QuerySnapshot>(
@@ -24,6 +25,13 @@ class CategoryDetailsView extends StatelessWidget {
             );
           } else {
             var data = snapshot.data?.docs;
+
+            // Check if no doctors are found
+            if (data == null || data.isEmpty) {
+              return const Center(
+                child: Text('No doctor found'),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
@@ -33,7 +41,7 @@ class CategoryDetailsView extends StatelessWidget {
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                 ),
-                itemCount: data?.length ?? 0,
+                itemCount: data.length,
                 itemBuilder: (BuildContext context, index) {
                   return Container(
                     decoration: BoxDecoration(
@@ -51,27 +59,32 @@ class CategoryDetailsView extends StatelessWidget {
                           child: Container(
                             width: 130,
                             color: AppColors.greenColor,
-                            child: Image.asset(
-                              AppAssets.imgLogin,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+                            child: data[index]['image'] == ''
+                                ? Image.asset(
+                                    AppAssets.imgLogin,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(data[index]['image']),
                           ),
                         ),
                         const Divider(),
-                        data![index]['docName']
+                        data[index]['docName']
                             .toString()
                             .text
                             .size(AppFontSize.size16)
                             .make(),
-                        VxRating(
-                          onRatingUpdate: (value) {},
-                          maxRating: 5,
-                          count: 5,
-                          value:
+                        RatingBarIndicator(
+                          rating:
                               double.parse(data[index]['docRating'].toString()),
-                          stepInt: true,
-                        ),
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemCount: 5,
+                          itemSize: 20.0,
+                          direction: Axis.horizontal,
+                        )
                       ],
                     ),
                   ).onTap(() {

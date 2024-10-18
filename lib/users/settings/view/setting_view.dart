@@ -1,8 +1,9 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:s_medi/general/consts/consts.dart';
+import 'package:s_medi/users/auth/view/login_page.dart';
+import 'package:s_medi/users/widgets/coustom_iconbutton.dart';
 
 import '../../auth/controller/signup_controller.dart';
-import '../../auth/view/login_page.dart';
-import '../../widgets/coustom_iconbutton.dart';
 import '../controller/profile_controller.dart';
 
 class SettingsView extends StatelessWidget {
@@ -10,13 +11,13 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controler = Get.put(ProfileController());
+    var controller = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
-        title: "Setting".text.make(),
+        title: const Text("Setting"),
       ),
       body: Obx(
-        () => controler.isLoading.value
+        () => controller.isLoading.value
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -26,15 +27,55 @@ class SettingsView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        AppAssets.imgLogin,
-                        width: 200,
+                      Stack(
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              image: DecorationImage(
+                                image: controller.profileImageUrl.value.isEmpty
+                                    ? AssetImage(
+                                        AppAssets.imgLogin,
+                                      )
+                                    : NetworkImage(
+                                        controller.profileImageUrl.value,
+                                      ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 20,
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  _showImagePickerBottomSheet(
+                                      context, controller);
+                                },
+                                icon: const Icon(
+                                  Icons.upload,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: controler.username.value.text.make(),
+                          child: Text(controller.username.value),
                         ),
                       ),
                       10.heightBox,
@@ -42,21 +83,11 @@ class SettingsView extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: controler.email.value.text.make(),
+                          child: Text(controller.email.value),
                         ),
                       ),
                       20.heightBox,
                       const Divider(),
-                      20.heightBox,
-                      // CoustomIconButton(
-                      //   color: AppColors.primeryColor,
-                      //   onTap: () {},
-                      //   title: "Change Password",
-                      //   icon: const Icon(
-                      //     Icons.lock,
-                      //     color: Colors.white,
-                      //   ),
-                      // ),
                       10.heightBox,
                       CoustomIconButton(
                         color: Colors.black.withOpacity(.4),
@@ -69,7 +100,7 @@ class SettingsView extends StatelessWidget {
                       ),
                       10.heightBox,
                       CoustomIconButton(
-                        color: AppColors.redcolor,
+                        color: Colors.red,
                         onTap: () {
                           SignupController().signout();
                           Get.offAll(() => const LoginView());
@@ -84,6 +115,33 @@ class SettingsView extends StatelessWidget {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+
+  void _showImagePickerBottomSheet(
+      BuildContext context, ProfileController controller) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Wrap(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.camera_alt),
+            title: const Text('Camera'),
+            onTap: () async {
+              Navigator.pop(context);
+              await controller.pickImage(ImageSource.camera);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.photo),
+            title: const Text('Gallery'),
+            onTap: () async {
+              Navigator.pop(context);
+              await controller.pickImage(ImageSource.gallery);
+            },
+          ),
+        ],
       ),
     );
   }

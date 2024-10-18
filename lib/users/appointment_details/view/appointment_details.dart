@@ -1,4 +1,5 @@
 import 'package:s_medi/general/consts/consts.dart';
+import 'package:s_medi/users/review/view/review_screen.dart';
 
 class Appointmentdetails extends StatelessWidget {
   final DocumentSnapshot doc;
@@ -8,7 +9,7 @@ class Appointmentdetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.greenColor,
+        backgroundColor: AppColors.whiteColor,
         title: "Appointment Details".text.make(),
       ),
       body: Padding(
@@ -101,7 +102,58 @@ class Appointmentdetails extends StatelessWidget {
                   10.heightBox,
                   "Problems".text.semiBold.make(),
                   doc['appMsg'].toString().text.make(),
-                  10.heightBox,
+                  30.heightBox,
+                  "Status".text.semiBold.make(),
+                  doc['status'].toString().text.make(),
+                  40.heightBox,
+                  doc['status'] == "complete"
+                      ? Align(
+                          alignment: Alignment.center,
+                          child: doc['review'] == "false"
+                              ? InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                      () => ReviewPage(
+                                        docId: doc['appWith'],
+                                        documetId: doc.id,
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primeryColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Give a Review",
+                                        style: TextStyle(
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  height: 50,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primeryColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Thanks for Review",
+                                      style: TextStyle(
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        )
+                      : Container()
                 ],
               ),
             ),
