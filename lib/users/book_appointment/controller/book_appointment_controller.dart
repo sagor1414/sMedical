@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:s_medi/general/consts/consts.dart';
 import 'package:intl/intl.dart';
+import 'package:s_medi/general/service/notification_service.dart';
 
 class AppointmentController extends GetxController {
   var isLoading = false.obs;
@@ -120,6 +121,30 @@ class AppointmentController extends GetxController {
               'review': "false",
             });
 
+            // Fetch the deviceToken from the doctors collection
+            var doctorDoc = await FirebaseFirestore.instance
+                .collection('doctors')
+                .doc(docId)
+                .get();
+
+            if (doctorDoc.exists &&
+                doctorDoc.data()!.containsKey('deviceToken')) {
+              String deviceToken = doctorDoc.data()!['deviceToken'];
+
+              // Check if deviceToken is not empty before sending notification
+              if (deviceToken.isNotEmpty) {
+                sendNotification(deviceToken, "New Appointment Booked",
+                    "You have a new appointment scheduled with $fullname on ${finalDate.value}, at ${selectedTime.value} PM. Please check your appointments for more details.");
+              }
+
+              // Optional: You can handle the case where the deviceToken is empty
+              // e.g., show a toast message that the notification was not sent
+            } else {
+              if (kDebugMode) {
+                print("Doctor's device token not found or empty");
+              }
+            }
+
             isLoading(false);
             VxToast.show(context, msg: "Appointment is booked successfully");
             Get.back();
@@ -148,6 +173,23 @@ class AppointmentController extends GetxController {
       return 'Enter valid data';
     }
     return null;
+  }
+
+  Future<void> sendNotification(
+      String userToken, String title, String body) async {
+    try {
+      final accessToken = await NotificationService().getAccessToken();
+      await NotificationService()
+          .sendNotification(accessToken, userToken, title, body);
+      if (kDebugMode) {
+        print("notification send");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error sending notifications: $e');
+      }
+      //_showDialog('Error', 'Error sending notification.');
+    }
   }
 
   @override

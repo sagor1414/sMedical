@@ -72,7 +72,7 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                               horizontal: 5, vertical: 10),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? const Color(0xff88d000)
+                                ? AppColors.primeryColor
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
@@ -149,7 +149,7 @@ class _BookAppointmentViewState extends State<BookAppointmentView> {
                                   horizontal: 5, vertical: 10),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xff88d000)
+                                    ? AppColors.primeryColor
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(

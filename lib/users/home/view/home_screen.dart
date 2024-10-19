@@ -72,6 +72,7 @@ class HomeScreen extends StatelessWidget {
                           borderSide:
                               const BorderSide(color: Colors.red, width: 2.0),
                         ),
+                        hintText: "Search doctor",
                       ),
                       style: TextStyle(color: AppColors.primeryColor),
                       validator: (value) {

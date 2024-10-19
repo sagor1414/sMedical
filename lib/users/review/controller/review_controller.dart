@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:s_medi/general/service/notification_service.dart';
 import 'package:s_medi/users/home/view/home.dart';
 
 class ReviewController extends GetxController {
@@ -35,6 +36,7 @@ class ReviewController extends GetxController {
         ));
   }
 
+  var loading = false.obs;
   Future<void> submitReview() async {
     String behavior = selectedBehavior.value;
     String comment = commentController.text;
@@ -46,9 +48,18 @@ class ReviewController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
       return;
     }
+
     String reviewBy = currentUser.uid;
+    String fullName = "User";
 
     try {
+      loading(true);
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(reviewBy)
+          .get();
+      fullName = userDoc['fullname'] ?? "User";
+
       // Submit the review
       await FirebaseFirestore.instance
           .collection('doctors')
@@ -67,6 +78,13 @@ class ReviewController extends GetxController {
           .doc(documentId)
           .update({'review': true});
 
+      // Get the device token for notifications
+      DocumentSnapshot doctorDoc = await FirebaseFirestore.instance
+          .collection('doctors')
+          .doc(docId)
+          .get();
+      String deviceToken = doctorDoc['deviceToken'] ?? '';
+
       QuerySnapshot reviewSnapshot = await FirebaseFirestore.instance
           .collection('doctors')
           .doc(docId)
@@ -80,15 +98,23 @@ class ReviewController extends GetxController {
         totalRating += doc['rating'];
       }
 
-      double averageRating = totalRating / reviewCount;
+      double averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
       await FirebaseFirestore.instance
           .collection('doctors')
           .doc(docId)
           .update({'docRating': averageRating});
 
-      Get.snackbar('Thank You', 'Thank you for giveing a review',
+      Get.snackbar('Thank You', 'Thank you for giving a review',
           snackPosition: SnackPosition.TOP);
+
+      // Construct the notification details
+      String title = '$fullName gave you a review';
+      String body = 'Comment: $comment\nRating: $reviewRating';
+
+      // Send the notification
+      await sendNotification(deviceToken, title, body);
+
       Get.offAll(() => const Home());
     } catch (e) {
       if (kDebugMode) {
@@ -96,6 +122,25 @@ class ReviewController extends GetxController {
       }
       Get.snackbar('Error', 'Failed to submit review',
           snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      loading(false);
+    }
+  }
+
+  Future<void> sendNotification(
+      String userToken, String title, String body) async {
+    try {
+      final accessToken = await NotificationService().getAccessToken();
+      await NotificationService()
+          .sendNotification(accessToken, userToken, title, body);
+      if (kDebugMode) {
+        print("Notification sent");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error sending notifications: $e');
+      }
+      //_showDialog('Error', 'Error sending notification.');
     }
   }
 }

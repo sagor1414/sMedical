@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:s_medi/general/consts/consts.dart';
 
 import '../controller/review_controller.dart';
 
@@ -87,11 +86,31 @@ class ReviewPage extends StatelessWidget {
             const SizedBox(height: 20),
             // Submit Button
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  reviewController.submitReview(); // Submit review
-                },
-                child: const Text('Submit Review'),
+              child: SizedBox(
+                width: context.screenWidth * .5,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primeryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    reviewController.submitReview();
+                  },
+                  child: Obx(
+                    () => reviewController.loading.value
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.whiteColor,
+                            ),
+                          )
+                        : Text(
+                            'Submit Review',
+                            style: TextStyle(color: AppColors.whiteColor),
+                          ),
+                  ),
+                ),
               ),
             ),
           ],

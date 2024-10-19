@@ -83,8 +83,10 @@ class DoctorProfile extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Get.to(
-                          () => AllReviewsPage(
-                            doctorId: doc.id,
+                          () => BookAppointmentView(
+                            docId: doc['docId'],
+                            docName: doc['docName'],
+                            docNum: doc['docPhone'],
                           ),
                         );
                       },
@@ -98,7 +100,7 @@ class DoctorProfile extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
                             child: Text(
-                              "See All reviews",
+                              "Book an Appointment",
                               style: TextStyle(color: AppColors.whiteColor),
                             ),
                           ),
@@ -182,16 +184,16 @@ class DoctorProfile extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
         child: CoustomButton(
-            onTap: () {
-              Get.to(
-                () => BookAppointmentView(
-                  docId: doc['docId'],
-                  docName: doc['docName'],
-                  docNum: doc['docPhone'],
-                ),
-              );
-            },
-            title: "Book an Appointment"),
+          onTap: () {
+            Get.to(
+              () => AllReviewsPage(
+                doctorId: doc.id,
+              ),
+            );
+          },
+          //title: "Book an Appointment",
+          title: "See All reviews",
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:s_medi/general/consts/colors.dart';
-
 import 'package:s_medi/general/list/home_icon_list.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../category_details/view/category_details.dart';
@@ -36,9 +35,12 @@ class _CategoryScreennState extends State<CategoryScreenn> {
           .where('docCategory', isEqualTo: category)
           .get();
 
-      setState(() {
-        categoryDoctorCount[category] = querySnapshot.size;
-      });
+      // Check if the widget is still mounted before calling setState
+      if (mounted) {
+        setState(() {
+          categoryDoctorCount[category] = querySnapshot.size;
+        });
+      }
     }
   }
 
