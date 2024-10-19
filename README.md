@@ -5,7 +5,9 @@ This is a complete doctor appointment app there user can appoint a doctor.
 please give a star for more projects.If it work for you please give me a star.and you can follow me for more projects. 
 
 ##Important for notification
+
 For notification setup, please refer to this document and instructions: https://drive.google.com/drive/folders/11wbfbytmhuDvFNDczv6UtX2zJ3LBkm0G.
+
 ## Notice
 Please don't change anything in firebase.if i got anything changed then i will remove firebase permissions.
 
