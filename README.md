@@ -43,6 +43,9 @@ For support, email sagorsamadder.official@gmail.com
 
 -smedi doctor(doctor app apk)-https://drive.google.com/file/d/1cgvgPMS3Q5VE00_bx7zvQ7-tCggMMCXu/view?usp=sharing
 
+-smedi doctor (Code for doctor app)-https://github.com/sagor1414/sMedical_doctor_app
+
+
 ## State mannagement
     for state mannagement wee use GETX
 ## Backend
