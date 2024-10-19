@@ -38,6 +38,9 @@ For support, email sagorsamadder.official@gmail.com
 - Cross platform
 - responseive ui
 
+# Apks
+-sMedical(user app apk)-https://drive.google.com/file/d/1JdzaN5I5LSXQKHu8hrnU8lF-0i4PRYsm/view?usp=sharing
+-smedi doctor(doctor app apk)-https://drive.google.com/file/d/1cgvgPMS3Q5VE00_bx7zvQ7-tCggMMCXu/view?usp=sharing
 
 ## State mannagement
     for state mannagement wee use GETX
