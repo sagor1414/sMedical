@@ -13,7 +13,7 @@ class AppointmentController extends GetxController {
   var finalDate = ''.obs;
   List<DateTime> dates = [];
   RxString selectedTime = ''.obs;
-  List<String> timeIntervals = [
+List<String> timeIntervals = [
     "08:00AM-08:30AM",
     "08:30AM-09:00AM",
     "09:00AM-09:30AM",
@@ -36,7 +36,33 @@ class AppointmentController extends GetxController {
     "05:30PM-06:00PM",
     "06:00PM-06:30PM",
     "06:30PM-07:00PM",
-  ];
+    "07:00PM-07:30PM",
+    "07:30PM-08:00PM",
+    "08:00PM-08:30PM",
+    "08:30PM-09:00PM",
+    "09:00PM-09:30PM",
+    "09:30PM-10:00PM",
+    "10:00PM-10:30PM",
+    "10:30PM-11:00PM",
+    "11:00PM-11:30PM",
+    "11:30PM-12:00AM",
+    "12:00AM-12:30AM",
+    "12:30AM-01:00AM",
+    "01:00AM-01:30AM",
+    "01:30AM-02:00AM",
+    "02:00AM-02:30AM",
+    "02:30AM-03:00AM",
+    "03:00AM-03:30AM",
+    "03:30AM-04:00AM",
+    "04:00AM-04:30AM",
+    "04:30AM-05:00AM",
+    "05:00AM-05:30AM",
+    "05:30AM-06:00AM",
+    "06:00AM-06:30AM",
+    "06:30AM-07:00AM",
+    "07:00AM-07:30AM",
+    "07:30AM-08:00AM",
+];
 
   void generateDates() {
     DateTime today = DateTime.now();
