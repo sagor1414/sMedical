@@ -65,7 +65,12 @@ class CategoryDetailsView extends StatelessWidget {
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   )
-                                : Image.network(data[index]['image']),
+                                : Image.network(
+                                    data[index]['image'],
+                                    height: 130,
+                                    width: 130,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                         const Divider(),
