@@ -8,7 +8,7 @@ import 'dart:developer' as devtools show log;
 class NotificationService {
   Future<String> getAccessToken() async {
     final jsonCredentials =
-        await rootBundle.loadString('data/smedical-e2870-be25cbd2b19f.json');
+        await rootBundle.loadString('data/smedical-e2870-14f48affd723.json');
     final creds = auth.ServiceAccountCredentials.fromJson(jsonCredentials);
 
     final jwtToken = _createJwtToken(creds);

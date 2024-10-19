@@ -60,5 +60,5 @@ flutter {
 }
 
 dependencies {
-    // No classpath here
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

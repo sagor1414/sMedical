@@ -98,7 +98,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
-    - data/smedical-e2870-be25cbd2b19f.json
+    - data/smedical-e2870-14f48affd723.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
