@@ -285,6 +285,9 @@ class HomeScreen extends StatelessWidget {
                                                 )
                                               : Image.network(
                                                   data[index]["image"],
+                                                  height: 130,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
                                                 ),
                                         ),
                                       ),

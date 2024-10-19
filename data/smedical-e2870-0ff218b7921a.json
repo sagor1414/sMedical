@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "smedical-e2870",
+  "private_key_id": "check documet for notification-(project readme)",
+  "private_key": "your api key check documet for notification-(project readme)",
+  "client_email": "",
+  "client_id": "",
+  "auth_uri": "",
+  "token_uri": "",
+  "auth_provider_x509_cert_url": "",
+  "client_x509_cert_url": "",
+  "universe_domain": ""
+}
