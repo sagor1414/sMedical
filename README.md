@@ -41,7 +41,7 @@ For support, email sagorsamadder.official@gmail.com
 # Apks
 -sMedical(user app apk)-https://drive.google.com/file/d/14q4AflmXCYXO6sNwE_KOuAJAXTQyFeoM/view?usp=sharing
 
--smedi doctor(doctor app apk)-https://drive.google.com/file/d/1cgvgPMS3Q5VE00_bx7zvQ7-tCggMMCXu/view?usp=sharing
+-smedi doctor(doctor app apk)-https://drive.google.com/file/d/1ZLL2oxb0yWuKxb8Rd_J7empFh5WfysiI/view?usp=sharing
 
 -smedi doctor (Code for doctor app)-https://github.com/sagor1414/sMedical_doctor_app
 
